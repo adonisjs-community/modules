@@ -7,15 +7,11 @@
   },
   "type": "module",
   "files": [
-    "build/src",
-    "build/providers",
-    "build/stubs",
-    "build/index.d.ts",
-    "build/index.js"
+    "build"
   ],
   "exports": {
     ".": "./build/index.js",
-    "./commands": "./build/commands.js",
+    "./commands": "./build/commands/main.js",
     "./types": "./build/src/types.js"
   },
   "scripts": {
@@ -28,11 +24,12 @@
     "pretest": "npm run lint",
     "test": "c8 npm run quick:test",
     "prebuild": "npm run lint && npm run clean",
-    "build": "tsc",
     "postbuild": "npm run copy:templates",
     "release": "np",
     "version": "npm run build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "index:commands": "adonis-kit index build/commands",
+    "build": "pnpm clean && tsup-node && pnpm copy:templates && pnpm index:commands"
   },
   "keywords": [],
   "author": "",
@@ -54,6 +51,7 @@
     "np": "^10.0.6",
     "prettier": "^3.3.2",
     "ts-node-maintained": "^10.9.4",
+    "tsup": "^8.5.0",
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
@@ -77,6 +75,17 @@
     "exclude": [
       "tests/**"
     ]
+  },
+  "tsup": {
+    "entry": [
+      "./index.ts",
+      "./commands/*.ts"
+    ],
+    "outDir": "./build",
+    "clean": false,
+    "format": "esm",
+    "dts": true,
+    "target": "esnext"
   },
   "prettier": "@adonisjs/prettier-config"
 }
