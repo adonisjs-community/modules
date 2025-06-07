@@ -20,6 +20,8 @@ export default class MMakeService extends BaseCommand {
   @flags.string({ description: 'Name of the module' })
   declare module: string
 
+  //TODO: Check if module exists
+
   /**
    * The stub to use for generating the service class
    */
