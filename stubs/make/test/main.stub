@@ -1,0 +1,14 @@
+{{#var testGroupName = generators.testGroupName(entity)}}
+{{#var testFileName = generators.testFileName(entity.name)}}
+{{#var moduleDirectoryName = flags.module}}
+{{{
+  exports({
+    to: app.makePath('app', moduleDirectoryName, testFileName)
+  })
+}}}
+import { test } from '@japa/runner'
+
+test.group('{{ testGroupName }}', () => {
+  test('example test', async ({ assert }) => {
+  })
+})

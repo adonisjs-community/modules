@@ -1,0 +1,25 @@
+{{#var middlewareName = generators.middlewareName(entity.name)}}
+{{#var middlewareFileName = generators.middlewareFileName(entity.name)}}
+{{#var moduleDirectoryName = flags.module}}
+{{{
+  exports({
+    to: app.makePath('app', moduleDirectoryName, middlewareFileName)
+  })
+}}}
+import type { HttpContext } from '@adonisjs/core/http'
+import type { NextFn } from '@adonisjs/core/types/http'
+
+export default class {{ middlewareName }} {
+  async handle(ctx: HttpContext, next: NextFn) {
+    /**
+     * Middleware logic goes here (before the next call)
+     */
+    console.log(ctx)
+
+    /**
+     * Call next method in the pipeline and return its output
+     */
+    const output = await next()
+    return output
+  }
+}

@@ -1,0 +1,10 @@
+{{#var listenerName = generators.listenerName(entity.name)}}
+{{#var listenerFileName = generators.listenerFileName(entity.name)}}
+{{#var moduleDirectoryName = flags.module}}
+{{{
+  exports({
+    to: app.makePath('app', moduleDirectoryName, listenerFileName)
+  })
+}}}
+export default class {{ listenerName }} {
+}

@@ -1,0 +1,7 @@
+{{#var viewFileName = generators.viewFileName(entity.name)}}
+{{#var moduleDirectoryName = flags.module}}
+{{{
+  exports({
+    to: app.makePath('app', moduleDirectoryName, viewFileName)
+  })
+}}}

@@ -1,0 +1,12 @@
+{{#var controllerName = generators.controllerName(entity.name, singular)}}
+{{#var controllerFileName = generators.controllerFileName(entity.name, singular)}}
+{{#var moduleDirectoryName = flags.module}}
+{{{
+  exports({
+    to: app.makePath('app', moduleDirectoryName, controllerFileName)
+  })
+}}}
+// import type { HttpContext } from '@adonisjs/core/http'
+
+export default class {{ controllerName }} {
+}
