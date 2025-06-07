@@ -27,25 +27,35 @@ export default class MakeModule extends BaseCommand {
     const moduleName = stringHelpers.snakeCase(this.name)
     const newDirectory = path.join(fileURLToPath(this.app.appRoot), 'app', moduleName)
 
-    if (!fs.existsSync(newDirectory)) {
-      fs.mkdirSync(newDirectory, { recursive: true })
-    }
+    const tasks = this.ui.tasks()
 
-    const packageJson = await JSON.parse(
-      await readFile(path.join(fileURLToPath(this.app.appRoot), 'package.json'), 'utf-8')
-    )
+    await tasks
+      .add(`creating module: ${moduleName}`, async (task) => {
+        if (fs.existsSync(newDirectory)) {
+          return task.error(`Module already exists (at : ${this.colors.grey(newDirectory)})`)
+        }
+        fs.mkdirSync(newDirectory, { recursive: true })
 
-    packageJson.imports.set(`#${moduleName}/*`, `./app/${moduleName}/*.js`)
+        return 'Completed'
+      })
+      .add('update package.json', async (task) => {
+        const packageJson = await JSON.parse(
+          await readFile(path.join(fileURLToPath(this.app.appRoot), 'package.json'), 'utf-8')
+        )
 
-    packageJson.imports = {
-      ...packageJson.imports,
-      [`#${moduleName}/*`]: `./app/${moduleName}/*.js`,
-    }
+        if (packageJson.imports[`#${moduleName}/*`]) {
+          return task.error(`Module ${moduleName} already exists in package.json imports`)
+        }
 
-    await writeFile(
-      path.join(fileURLToPath(this.app.appRoot), 'package.json'),
-      JSON.stringify(packageJson, null, 2),
-      'utf-8'
-    )
+        packageJson.imports[`#${moduleName}/*`] = `./app/${moduleName}/*.js`
+
+        await writeFile(
+          path.join(fileURLToPath(this.app.appRoot), 'package.json'),
+          JSON.stringify(packageJson, null, 2),
+          'utf-8'
+        )
+        return 'Completed'
+      })
+      .run()
   }
 }
