@@ -1,0 +1,12 @@
+{{#var serviceName = generators.serviceName(entity.name)}}
+{{#var moduleDirectoryName = generators.makePath('modules', flags.module)}}
+{{#var serviceFileName = generators.serviceFileName(entity.name)}}
+
+{{{
+  exports({
+    to: app.makePath(moduleDirectoryName, entity.path, serviceFileName),
+  })
+}}}
+export class {{ serviceName }} {
+  // Your code here
+}
