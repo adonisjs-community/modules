@@ -79,7 +79,7 @@
   "tsup": {
     "entry": [
       "./index.ts",
-      "./commands/*.ts"
+      "./commands/**/*.ts"
     ],
     "outDir": "./build",
     "clean": false,
