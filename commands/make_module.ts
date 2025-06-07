@@ -1,7 +1,7 @@
 import { args, BaseCommand } from '@adonisjs/core/ace'
 import stringHelpers from '@adonisjs/core/helpers/string'
 import * as fs from 'node:fs'
-import { readFile } from 'node:fs/promises'
+import { readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -35,8 +35,17 @@ export default class MakeModule extends BaseCommand {
       await readFile(path.join(fileURLToPath(this.app.appRoot), 'package.json'), 'utf-8')
     )
 
-    console.log(this.app.appRoot)
+    packageJson.imports.set(`#${moduleName}/*`, `./app/${moduleName}/*.js`)
 
-    console.log(packageJson)
+    packageJson.imports = {
+      ...packageJson.imports,
+      [`#${moduleName}/*`]: `./app/${moduleName}/*.js`,
+    }
+
+    await writeFile(
+      path.join(fileURLToPath(this.app.appRoot), 'package.json'),
+      JSON.stringify(packageJson, null, 2),
+      'utf-8'
+    )
   }
 }
