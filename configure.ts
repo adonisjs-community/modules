@@ -14,4 +14,10 @@
 
 import ConfigureCommand from '@adonisjs/core/commands/configure'
 
-export async function configure(_command: ConfigureCommand) {}
+export async function configure(command: ConfigureCommand) {
+  const codemods = await command.createCodemods()
+
+  await codemods.updateRcFile((rcFile) => {
+    rcFile.addCommand('adonis-modules/commands')
+  })
+}
