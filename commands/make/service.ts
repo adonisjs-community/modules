@@ -1,7 +1,6 @@
 import { args, BaseCommand, flags } from '@adonisjs/core/ace'
 import { CommandOptions } from '@adonisjs/core/types/ace'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { stubsRoot } from '../../stubs/main.js'
 
 /**
  * Make a new service class
@@ -28,8 +27,6 @@ export default class MMakeService extends BaseCommand {
   protected stubPath: string = 'make/service/main.stub'
 
   async run() {
-    // TODO: Clean this
-    const stubsRoot = path.join(fileURLToPath(import.meta.url), '..', '..', '..', 'stubs')
     const codemods = await this.createCodemods()
     await codemods.makeUsingStub(stubsRoot, this.stubPath, {
       flags: this.parsed.flags,
