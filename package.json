@@ -15,6 +15,7 @@
   ],
   "exports": {
     ".": "./build/index.js",
+    "./commands": "./build/commands.js",
     "./types": "./build/src/types.js"
   },
   "scripts": {
