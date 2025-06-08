@@ -6,18 +6,12 @@ import MakeException from '@adonisjs/core/commands/make/exception'
  * Make a new exception class
  */
 export default class MMakeException extends MakeException {
-  static override commandName = 'mmake:exception'
   static override description = 'Create a new custom exception class for a module'
 
   @flags.string({ description: 'Name of the module' })
   declare module: string
 
   //TODO: Check if module exists
-
-  /**
-   * The stub to use for generating the command class
-   */
-  protected override stubPath: string = 'make/exception/main.stub'
 
   override async run() {
     const codemods = await this.createCodemods()

@@ -7,24 +7,12 @@ import MakeListener from '@adonisjs/core/commands/make/listener'
  * listener
  */
 export default class MMakeListener extends MakeListener {
-  static override commandName = 'mmake:listener'
   static override description = 'Create a new event listener class for a module'
 
   @flags.string({ description: 'Name of the module' })
   declare module: string
 
   //TODO: Check if module exists
-
-  /**
-   * The stub to use for generating the event listener
-   */
-  protected override stubPath: string = 'make/listener/main.stub'
-
-  prepare() {
-    if (this.event) {
-      this.stubPath = 'make/listener/for_event.stub'
-    }
-  }
 
   override async run() {
     const codemods = await this.createCodemods()

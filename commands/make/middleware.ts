@@ -11,18 +11,12 @@ import { slash } from '@adonisjs/core/helpers'
  * class.
  */
 export default class MMakeMiddleware extends MakeMiddleware {
-  static override commandName = 'mmake:middleware'
   static override description = 'Create a new middleware class for HTTP requests for a module'
 
   @flags.string({ description: 'Name of the module' })
   declare module: string
 
   //TODO: Check if module exists
-
-  /**
-   * The stub to use for generating the middleware
-   */
-  protected override stubPath: string = 'make/middleware/main.stub'
 
   override async run() {
     const stackChoices = ['server', 'router', 'named']

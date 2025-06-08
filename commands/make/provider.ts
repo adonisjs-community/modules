@@ -12,18 +12,12 @@ const ALLOWED_ENVIRONMENTS = ['web', 'console', 'test', 'repl'] satisfies AppEnv
  * Make a new provider class
  */
 export default class MMakeProvider extends MakeProvider {
-  static override commandName = 'mmake:provider'
   static override description = 'Create a new service provider class for a module'
 
   @flags.string({ description: 'Name of the module' })
   declare module: string
 
   //TODO: Check if module exists
-
-  /**
-   * The stub to use for generating the provider class
-   */
-  protected override stubPath: string = 'make/provider/main.stub'
 
   /**
    * Validate the environments flag passed by the user

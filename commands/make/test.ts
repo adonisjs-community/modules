@@ -6,18 +6,12 @@ import MakeTest from '@adonisjs/core/commands/make/test'
  * Make a new test file
  */
 export default class MMakeTest extends MakeTest {
-  static override commandName = 'mmake:test'
   static override description = 'Create a new Japa test file for a module'
 
   @flags.string({ description: 'Name of the module' })
   declare module: string
 
   //TODO: Check if module exists
-
-  /**
-   * The stub to use for generating the test file
-   */
-  protected override stubPath: string = 'make/test/main.stub'
 
   /**
    * Returns the suite name for creating the test file
@@ -79,7 +73,7 @@ export default class MMakeTest extends MakeTest {
   /**
    * Executed by ace
    */
-  async run() {
+  override async run() {
     const suite = this.#findSuite(await this.#getSuite())
 
     /**
