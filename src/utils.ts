@@ -17,10 +17,6 @@ export function registerModule(app: ApplicationService, value: string) {
   const moduleName = stringHelpers.snakeCase(value)
   const packageJson = getPackageJson(app)
 
-  if (checkModule(app, value)) {
-    throw new Error(`Module ${moduleName} already exists in package.json imports`)
-  }
-
   packageJson.imports[`#${moduleName}/*`] = `./app/${moduleName}/*.js`
 
   writeFileSync(

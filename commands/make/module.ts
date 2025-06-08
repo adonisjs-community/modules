@@ -4,7 +4,7 @@ import * as fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { COMMAND_PREFIX } from '../../src/constants.js'
-import { registerModule } from '../../src/utils.js'
+import { checkModule, registerModule } from '../../src/utils.js'
 
 /**
  * The make module command to create a new module with proper structure and files.
@@ -31,8 +31,14 @@ export default class MakeModule extends BaseCommand {
 
         return 'Completed'
       })
-      .add('update package.json', async () => {
-        registerModule(this.app, this.name)
+      .add('update package.json', async (task) => {
+        if (checkModule(this.app, moduleName)) {
+          return task.error(
+            `Module already registered in package.json (at: ${this.colors.grey('package.json')})`
+          )
+        }
+
+        registerModule(this.app, moduleName)
 
         return 'Completed'
       })
