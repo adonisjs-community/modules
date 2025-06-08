@@ -19,10 +19,10 @@ node ace add @adonisjs-community/modules
 
 ## Getting Started
 
-After installation, you can create a new module using the `mmake:module` command:
+After installation, you can create a new module using the `make:module` command:
 
 ```bash
-node ace mmake:module auth
+node ace make:module auth
 ```
 
 This will create a new module named `auth` in the `/app` directory, as well as registering a new alias for the path resolution in your package.json file:
@@ -38,10 +38,11 @@ This will create a new module named `auth` in the `/app` directory, as well as r
 
 ## That's it !
 
-You can now reuse the `@adonisjs/core` `make` (as ***m***make) commands to create controllers, models, views, etc., within your module. For example:
+You can now reuse the `@adonisjs/core` `make` commands with flag `-m (--module)` to create controllers, models, views, etc., within your module. For example:
 
 ```bash
-node ace mmake:controller sign_in --module=auth
+node ace make:controller sign_in -m auth
+node ace make:controller sign_in --module auth
 ```
 
 This command will create a new controller file named `sign_in_controller.ts` in the `auth` module.
