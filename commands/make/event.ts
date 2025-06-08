@@ -20,6 +20,7 @@ export default class MMakeEvent extends MakeEvent {
     await codemods.makeUsingStub(stubsRoot, this.stubPath, {
       flags: this.parsed.flags,
       entity: this.app.generators.createEntity(this.name),
+      pathAlias: `#${this.module}/events`,
     })
   }
 }
