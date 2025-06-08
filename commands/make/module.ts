@@ -20,28 +20,21 @@ export default class MakeModule extends BaseCommand {
     const moduleName = stringHelpers.snakeCase(this.name)
     const newDirectory = path.join(fileURLToPath(this.app.appRoot), 'app', moduleName)
 
-    const tasks = this.ui.tasks()
+    const createDirectory = this.logger.action(`create module: ${moduleName}`)
 
-    await tasks
-      .add(`creating module: ${moduleName}`, async (task) => {
-        if (fs.existsSync(newDirectory)) {
-          return task.error(`Module already exists (at : ${this.colors.grey(newDirectory)})`)
-        }
-        fs.mkdirSync(newDirectory, { recursive: true })
+    if (!fs.existsSync(newDirectory)) {
+      fs.mkdirSync(newDirectory, { recursive: true })
+      createDirectory.succeeded()
+    } else {
+      createDirectory.skipped(`Module already exists (at : ${this.colors.grey(newDirectory)})`)
+    }
 
-        return 'Completed'
-      })
-      .add('update package.json', async (task) => {
-        if (checkModule(this.app, moduleName)) {
-          return task.error(
-            `Module already registered in package.json (at: ${this.colors.grey('package.json')})`
-          )
-        }
-
-        registerModule(this.app, moduleName)
-
-        return 'Completed'
-      })
-      .run()
+    const updatePackageJson = this.logger.action('update package.json')
+    if (!checkModule(this.app, moduleName)) {
+      registerModule(this.app, moduleName)
+      updatePackageJson.succeeded()
+    } else {
+      updatePackageJson.skipped(`Module already exists (at : ${this.colors.grey(newDirectory)})`)
+    }
   }
 }
