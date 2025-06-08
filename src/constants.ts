@@ -1,1 +1,1 @@
-export const STUBS_PATH = ''
+export const COMMAND_PREFIX = 'make'
