@@ -3,7 +3,7 @@
 {{#var moduleDirectoryName = flags.module}}
 {{{
   exports({
-    to: app.makePath('app', moduleDirectoryName, controllerFileName)
+    to: app.makePath('app', moduleDirectoryName, 'controllers', controllerFileName)
   })
 }}}
 import type { HttpContext } from '@adonisjs/core/http'

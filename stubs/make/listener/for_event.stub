@@ -6,7 +6,7 @@
 {{#var moduleDirectoryName = flags.module}}
 {{{
   exports({
-    to: app.makePath('app', moduleDirectoryName, listenerFileName)
+    to: app.makePath('app', moduleDirectoryName, 'listeners', listenerFileName)
   })
 }}}
 import type {{ eventName }} from '{{ eventImportPath }}'

@@ -3,7 +3,7 @@
 {{#var moduleDirectoryName = flags.module}}
 {{{
   exports({
-    to: app.makePath('app', moduleDirectoryName, testFileName)
+    to: app.makePath('app', moduleDirectoryName, 'tests', testFileName)
   })
 }}}
 import { test } from '@japa/runner'

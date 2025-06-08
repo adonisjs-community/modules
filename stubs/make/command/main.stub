@@ -4,7 +4,7 @@
 {{#var moduleDirectoryName = flags.module}}
 {{{
   exports({
-    to: app.makePath('app', moduleDirectoryName, commandFileName)
+    to: app.makePath('app', moduleDirectoryName, 'commands', commandFileName)
   })
 }}}
 import { BaseCommand } from '@adonisjs/core/ace'

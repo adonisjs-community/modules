@@ -4,7 +4,7 @@
 
 {{{
   exports({
-    to: app.makePath('app', moduleDirectoryName, serviceFileName),
+    to: app.makePath('app', moduleDirectoryName, 'services', serviceFileName),
   })
 }}}
 export class {{ serviceName }} {

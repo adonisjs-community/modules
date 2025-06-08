@@ -5,7 +5,7 @@
 {{#var moduleDirectoryName = flags.module}}
 {{{
   exports({
-    to: app.makePath('app', moduleDirectoryName, validatorFileName)
+    to: app.makePath('app', moduleDirectoryName, 'validators', validatorFileName)
   })
 }}}
 import vine from '@vinejs/vine'

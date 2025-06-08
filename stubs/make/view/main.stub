@@ -2,6 +2,6 @@
 {{#var moduleDirectoryName = flags.module}}
 {{{
   exports({
-    to: app.makePath('app', moduleDirectoryName, viewFileName)
+    to: app.makePath('app', moduleDirectoryName, 'views', viewFileName)
   })
 }}}

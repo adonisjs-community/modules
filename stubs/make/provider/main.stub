@@ -3,7 +3,7 @@
 {{#var moduleDirectoryName = flags.module}}
 {{{
   exports({
-    to: app.makePath('app', moduleDirectoryName, providerFileName)
+    to: app.makePath('app', moduleDirectoryName, 'providers', providerFileName)
   })
 }}}
 import type { ApplicationService } from '@adonisjs/core/types'

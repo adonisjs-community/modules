@@ -3,7 +3,7 @@
 {{#var moduleDirectoryName = flags.module}}
 {{{
   exports({
-    to: app.makePath('app', moduleDirectoryName, eventFileName)
+    to: app.makePath('app', moduleDirectoryName, 'events', eventFileName)
   })
 }}}
 import { BaseEvent } from '@adonisjs/core/events'

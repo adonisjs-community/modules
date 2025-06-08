@@ -3,7 +3,7 @@
 {{#var moduleDirectoryName = flags.module}}
 {{{
   exports({
-    to: app.makePath('app', moduleDirectoryName, exceptionFileName)
+    to: app.makePath('app', moduleDirectoryName, 'exceptions', exceptionFileName)
   })
 }}}
 import { Exception } from '@adonisjs/core/exceptions'
