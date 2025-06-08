@@ -25,7 +25,7 @@
     "test": "c8 npm run quick:test",
     "prebuild": "npm run lint && npm run clean",
     "postbuild": "npm run copy:templates",
-    "release": "np",
+    "release": "release-it",
     "version": "npm run build",
     "prepublishOnly": "npm run build",
     "index:commands": "adonis-kit index build/commands",
@@ -52,7 +52,8 @@
     "prettier": "^3.3.2",
     "ts-node-maintained": "^10.9.4",
     "tsup": "^8.5.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "release-it": "^19.0.3"
   },
   "peerDependencies": {
     "@adonisjs/core": "^6.2.0"
