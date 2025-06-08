@@ -2,19 +2,21 @@ import stringHelpers from '@adonisjs/core/helpers/string'
 import { stubsRoot } from '../../stubs/main.js'
 import MakeController from '@adonisjs/core/commands/make/controller'
 import { flags } from '@adonisjs/core/ace'
+import { checkModule } from '../../src/utils.js'
+import { COMMAND_PREFIX, MODULE_FLAG } from '../../src/constants.js'
 
 /**
  * The make controller command to create an HTTP controller
  */
 export default class MMakeController extends MakeController {
-  static override description = 'Create a new HTTP controller class for a module'
-
-  @flags.string({ description: 'Name of the module' })
+  @flags.string(MODULE_FLAG)
   declare module: string
 
-  //TODO: Check if module exists
-
   override async run() {
+    if (!checkModule(this.app, this.module)) {
+      this.kernel.exec(`${COMMAND_PREFIX}:module`, [this.module])
+    }
+
     const codemods = await this.createCodemods()
     await codemods.makeUsingStub(stubsRoot, this.stubPath, {
       flags: this.parsed.flags,

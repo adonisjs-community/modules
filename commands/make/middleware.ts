@@ -5,20 +5,22 @@ import { flags } from '@adonisjs/core/ace'
 import MakeMiddleware from '@adonisjs/core/commands/make/middleware'
 import stringHelpers from '@adonisjs/core/helpers/string'
 import { slash } from '@adonisjs/core/helpers'
+import { COMMAND_PREFIX, MODULE_FLAG } from '../../src/constants.js'
+import { checkModule } from '../../src/utils.js'
 
 /**
  * The make middleware command to create a new middleware
  * class.
  */
 export default class MMakeMiddleware extends MakeMiddleware {
-  static override description = 'Create a new middleware class for HTTP requests for a module'
-
-  @flags.string({ description: 'Name of the module' })
+  @flags.string(MODULE_FLAG)
   declare module: string
 
-  //TODO: Check if module exists
-
   override async run() {
+    if (!checkModule(this.app, this.module)) {
+      this.kernel.exec(`${COMMAND_PREFIX}:module`, [this.module])
+    }
+
     const stackChoices = ['server', 'router', 'named']
 
     /**

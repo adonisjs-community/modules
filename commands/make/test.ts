@@ -1,17 +1,15 @@
 import { stubsRoot } from '../../stubs/main.js'
 import { flags } from '@adonisjs/core/ace'
 import MakeTest from '@adonisjs/core/commands/make/test'
+import { COMMAND_PREFIX, MODULE_FLAG } from '../../src/constants.js'
+import { checkModule } from '../../src/utils.js'
 
 /**
  * Make a new test file
  */
 export default class MMakeTest extends MakeTest {
-  static override description = 'Create a new Japa test file for a module'
-
-  @flags.string({ description: 'Name of the module' })
+  @flags.string(MODULE_FLAG)
   declare module: string
-
-  //TODO: Check if module exists
 
   /**
    * Returns the suite name for creating the test file
@@ -74,6 +72,10 @@ export default class MMakeTest extends MakeTest {
    * Executed by ace
    */
   override async run() {
+    if (!checkModule(this.app, this.module)) {
+      this.kernel.exec(`${COMMAND_PREFIX}:module`, [this.module])
+    }
+
     const suite = this.#findSuite(await this.#getSuite())
 
     /**

@@ -5,6 +5,8 @@ import type { AppEnvironments } from '@adonisjs/core/types/app'
 import { flags } from '@adonisjs/core/ace'
 import MakeProvider from '@adonisjs/core/commands/make/provider'
 import { slash } from '@adonisjs/core/helpers'
+import { COMMAND_PREFIX, MODULE_FLAG } from '../../src/constants.js'
+import { checkModule } from '../../src/utils.js'
 
 const ALLOWED_ENVIRONMENTS = ['web', 'console', 'test', 'repl'] satisfies AppEnvironments[]
 
@@ -12,12 +14,8 @@ const ALLOWED_ENVIRONMENTS = ['web', 'console', 'test', 'repl'] satisfies AppEnv
  * Make a new provider class
  */
 export default class MMakeProvider extends MakeProvider {
-  static override description = 'Create a new service provider class for a module'
-
-  @flags.string({ description: 'Name of the module' })
+  @flags.string(MODULE_FLAG)
   declare module: string
-
-  //TODO: Check if module exists
 
   /**
    * Validate the environments flag passed by the user
@@ -30,6 +28,10 @@ export default class MMakeProvider extends MakeProvider {
   }
 
   override async run() {
+    if (!checkModule(this.app, this.module)) {
+      this.kernel.exec(`${COMMAND_PREFIX}:module`, [this.module])
+    }
+
     /**
      * Ensure the environments are valid when provided via flag
      */
