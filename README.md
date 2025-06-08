@@ -41,7 +41,7 @@ This will create a new module named `auth` in the `/app` directory, as well as r
 You can now reuse the `@adonisjs/core` `make` commands with flag `-m (--module)` to create controllers, models, views, etc., within your module. For example:
 
 ```bash
-node ace make:controller sign_in -m auth
+node ace make:controller sign_in -m=auth
 node ace make:controller sign_in --module auth
 ```
 
