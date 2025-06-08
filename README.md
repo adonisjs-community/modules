@@ -7,6 +7,15 @@
 `@adonisjs-community/modules` provides a set of commands based on `adonisjs/core` commands to help you quickly scaffold your AdonisJS projects into modules *(more accurately into feature-based subdirectories)*. 
 This allows you to organize your code in a modular way, making it easier to maintain and scale your application.
 
+```
+├── app
+│  └── auth
+│  │  └── controllers
+│  │  └── services
+│  │  └── models
+│  └── users
+```
+
 **INSERT SCREENSHOT HERE**
 
 ## Installation
