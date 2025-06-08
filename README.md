@@ -9,14 +9,16 @@ This allows you to organize your code in a modular way, making it easier to main
 
 ```
 ├── app
-│  └── auth
-│  │  └── controllers
-│  │  └── services
+│  ├── auth
+│  │  ├── controllers
+│  │  ├── services
 │  │  └── models
 │  └── users
-```
+│     ├── exceptions
+│     ├── factories
+│     └── validators
 
-**INSERT SCREENSHOT HERE**
+```
 
 ## Installation
 
