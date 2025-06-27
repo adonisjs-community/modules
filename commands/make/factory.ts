@@ -12,6 +12,10 @@ export default class MMakeFactory extends MakeFactory {
   declare module: string
 
   override async run() {
+    if (!this.model) {
+      return super.run()
+    }
+
     if (!checkModule(this.app, this.module)) {
       this.kernel.exec(`${COMMAND_PREFIX}:module`, [this.module])
     }

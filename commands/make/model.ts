@@ -9,48 +9,13 @@ export default class MMakeModel extends MakeModel {
   declare module: string
 
   /**
-   * Run migrations
-   */
-  private async runMakeMigration() {
-    if (!this.migration || this.exitCode) {
-      return
-    }
-
-    const makeMigration = await this.kernel.exec('make:migration', [this.name])
-    this.exitCode = makeMigration.exitCode
-    this.error = makeMigration.error
-  }
-
-  /**
-   * Make controller
-   */
-  private async runMakeController() {
-    if (!this.controller || this.exitCode) {
-      return
-    }
-
-    const makeController = await this.kernel.exec('make:controller', [this.name])
-    this.exitCode = makeController.exitCode
-    this.error = makeController.error
-  }
-
-  /**
-   * Make factory
-   */
-  private async runMakeFactory() {
-    if (!this.factory || this.exitCode) {
-      return
-    }
-
-    const makeFactory = await this.kernel.exec('make:factory', [this.name])
-    this.exitCode = makeFactory.exitCode
-    this.error = makeFactory.error
-  }
-
-  /**
    * Execute command
    */
   override async run(): Promise<void> {
+    if (!this.module) {
+      return super.run()
+    }
+
     if (!checkModule(this.app, this.module)) {
       this.kernel.exec(`${COMMAND_PREFIX}:module`, [this.module])
     }
@@ -60,9 +25,5 @@ export default class MMakeModel extends MakeModel {
       flags: this.parsed.flags,
       entity: this.app.generators.createEntity(this.name),
     })
-
-    await this.runMakeMigration()
-    await this.runMakeController()
-    await this.runMakeFactory()
   }
 }
