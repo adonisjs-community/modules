@@ -12,6 +12,10 @@ export default class MMakeService extends MakeService {
   declare module: string
 
   override async run() {
+    if (!this.module) {
+      return super.run()
+    }
+
     if (!checkModule(this.app, this.module)) {
       this.kernel.exec(`${COMMAND_PREFIX}:module`, [this.module])
     }
