@@ -12,7 +12,7 @@ export default class MMakeFactory extends MakeFactory {
   declare module: string
 
   override async run() {
-    if (!this.model) {
+    if (!this.module) {
       return super.run()
     }
 
