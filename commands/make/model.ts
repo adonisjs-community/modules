@@ -5,8 +5,35 @@ import { COMMAND_PREFIX, MODULE_FLAG } from '../../src/constants.js'
 import { checkModule } from '../../src/utils.js'
 
 export default class MMakeModel extends MakeModel {
-  @flags.string(MODULE_FLAG)
+  @flags.string({
+    ...MODULE_FLAG,
+    alias: undefined,
+  })
   declare module: string
+
+  private async runMakeControllerModule() {
+    if (!this.controller || this.exitCode) {
+      return
+    }
+
+    const makeController = await this.kernel.exec('make:controller', [
+      this.name,
+      '--module',
+      this.module,
+    ])
+    this.exitCode = makeController.exitCode
+    this.error = makeController.error
+  }
+
+  private async runMakeFactoryModule() {
+    if (!this.factory || this.exitCode) {
+      return
+    }
+
+    const makeFactory = await this.kernel.exec('make:factory', [this.name, '--module', this.module])
+    this.exitCode = makeFactory.exitCode
+    this.error = makeFactory.error
+  }
 
   /**
    * Execute command
@@ -25,5 +52,9 @@ export default class MMakeModel extends MakeModel {
       flags: this.parsed.flags,
       entity: this.app.generators.createEntity(this.name),
     })
+
+    await this['runMakeMigration']()
+    await this.runMakeControllerModule()
+    await this.runMakeFactoryModule()
   }
 }
