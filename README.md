@@ -49,7 +49,7 @@ This will create a new module named `auth` in the `/app` directory, as well as r
 
 ## That's it !
 
-You can now reuse the `@adonisjs/core` `make` commands with flag `-m (--module)` to create controllers, models, views, etc., within your module. For example:
+You can now reuse the `@adonisjs/core` and `@adonisjs/lucid` `make` commands with flag `-m (--module)` to create controllers, models, views, etc., within your module. For example:
 
 ```bash
 node ace make:controller sign_in -m=auth
@@ -59,6 +59,14 @@ node ace make:controller sign_in --module auth
 This command will create a new controller file named `sign_in_controller.ts` in the `auth` module.
 
 At this point, you can refer to the [AdonisJS commands documentation](https://docs.adonisjs.com/guides/references/commands#makecontroller) to learn more about the available commands and how to use them.
+
+## Particularities (`@adonisjs/lucid`)
+
+When using the `@adonisjs/lucid` commands, you can also specify the module where you want to create your models, migrations, and factories.
+
+That said, when generating a model, the `-m` alias will not work, as this alias is already used to specify if the codemods should generate a migration for the model.
+
+Last thing to note, the generated migrations will be placed in the `database/migrations` directory and not inside the module directory. This is because migrations are global to the application and not specific to a module. Thus, order of execution is important, and having them in a single directory allows you to manage them more easily.
 
 ## License
 Modules is open-sourced software licensed under the [MIT license](./LICENSE.md).
