@@ -12,11 +12,14 @@ This allows you to organize your code in a modular way, making it easier to main
 │  ├── auth
 │  │  ├── controllers
 │  │  ├── services
-│  │  └── models
+│  │  ├── models
+|  |  └── router
 │  └── users
 │     ├── exceptions
 │     ├── factories
-│     └── validators
+│     ├── validators
+|     ├── models
+|     └── router
 
 ```
 
@@ -46,6 +49,9 @@ This will create a new module named `auth` in the `/app` directory, as well as r
   }
 }
 ```
+
+## Router Command (optional)
+You could also create router by module with the `make:router` command. You must provide module name
 
 ## That's it !
 
