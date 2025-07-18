@@ -29,7 +29,7 @@ export default class MakeRouter extends BaseCommand {
         }
 
         const routerName = `${moduleName}Router`
-        const exportPath = this.app.makePath(modulePath, moduleName, 'router.ts')
+        const exportPath = this.app.makePath(modulePath, 'router.ts')
 
         const codemods = await this.createCodemods()
         await codemods.makeUsingStub(stubsRoot, this.stubPath, {
