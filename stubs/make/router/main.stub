@@ -1,0 +1,9 @@
+import router from '@adonisjs/core/services/router'
+
+{{{
+    exports({ to: exportPath })
+}}}
+
+export const {{ routerName }} = router
+  .group(() => {})
+  .as('{{ moduleName }}')

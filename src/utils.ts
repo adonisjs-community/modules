@@ -1,8 +1,9 @@
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { Codemods } from '@adonisjs/core/ace/codemods'
 import stringHelpers from '@adonisjs/core/helpers/string'
 import { ApplicationService } from '@adonisjs/core/types'
 import { readFileSync, writeFileSync } from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 export function checkModule(app: ApplicationService, value: string): boolean {
   const moduleName = stringHelpers.snakeCase(value)
@@ -29,4 +30,10 @@ export function registerModule(app: ApplicationService, value: string) {
 export function getPackageJson(app: ApplicationService): any {
   const packageJsonPath = path.join(fileURLToPath(app.appRoot), 'package.json')
   return JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
+}
+
+export function registerRouter(codemods: Codemods, moduleName: string) {
+  return codemods.updateRcFile((rcFile) => {
+    rcFile.addPreloadFile(`#${moduleName}/router`)
+  })
 }
