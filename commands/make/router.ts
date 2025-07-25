@@ -1,8 +1,8 @@
 import { args, BaseCommand } from '@adonisjs/core/ace'
 import stringHelpers from '@adonisjs/core/helpers/string'
-import * as fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { checkModule, registerRouter } from '../../src/utils.js'
 import { stubsRoot } from '../../stubs/main.js'
 
 /**
@@ -20,22 +20,28 @@ export default class MakeRouter extends BaseCommand {
     async run() {
         const moduleName = stringHelpers.snakeCase(this.module)
         const modulePath = path.join(fileURLToPath(this.app.appRoot), 'app', moduleName)
-
         const createFile = this.logger.action(`create router for module ${moduleName}`)
 
-        if (!fs.existsSync(modulePath)) {
-            createFile.skipped(`Module does not exists (at: ${this.colors.grey(modulePath)})`)
+        if (!checkModule(this.app, moduleName)) {
+            createFile.skipped(`Module doesn't exists (at: ${this.colors.grey(modulePath)})`)
             return
         }
+
+        createFile.succeeded()
 
         const routerName = `${moduleName}Router`
         const exportPath = this.app.makePath(modulePath, 'router.ts')
 
         const codemods = await this.createCodemods()
+
         await codemods.makeUsingStub(stubsRoot, this.stubPath, {
             routerName,
             moduleName,
-            exportPath
+            exportPath,
         })
+
+        const updateRcFile = this.logger.action('update adonisrc file')
+        await registerRouter(codemods, moduleName)
+        updateRcFile.succeeded()
     }
 }
