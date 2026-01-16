@@ -4,9 +4,9 @@ import { stubsRoot } from '../../stubs/main.js'
 import type { AppEnvironments } from '@adonisjs/core/types/app'
 import { flags } from '@adonisjs/core/ace'
 import MakeProvider from '@adonisjs/core/commands/make/provider'
-import { slash } from '@adonisjs/core/helpers'
 import { COMMAND_PREFIX, MODULE_FLAG } from '../../src/constants.js'
 import { checkModule } from '../../src/utils.js'
+import stringHelpers from '@adonisjs/core/helpers/string'
 
 const ALLOWED_ENVIRONMENTS = ['web', 'console', 'test', 'repl'] satisfies AppEnvironments[]
 
@@ -74,7 +74,7 @@ export default class MMakeProvider extends MakeProvider {
      * Creative relative path for the provider file from
      * the "./start" directory
      */
-    const providerRelativePath = slash(
+    const providerRelativePath = stringHelpers.toUnixSlash(
       relative(this.app.providersPath(), destination).replace(extname(destination), '')
     )
 
