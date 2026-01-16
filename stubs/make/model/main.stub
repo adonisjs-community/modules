@@ -1,4 +1,5 @@
 {{#var modelName = generators.modelName(entity.name)}}
+{{#var modelSchemaName = `${modelName}Schema` }}
 {{#var modelFileName = generators.modelFileName(entity.name)}}
 {{#var moduleDirectoryName = flags.module}}
 {{{
@@ -6,16 +7,7 @@
     to: app.makePath('app', moduleDirectoryName, 'models', modelFileName)
   })
 }}}
-import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { {{ modelSchemaName }} } from '#database/schema'
 
-export default class {{ modelName }} extends BaseModel {
-  @column({ isPrimary: true })
-  declare id: number
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
+export default class {{ modelName }} extends {{ modelSchemaName }} {
 }
