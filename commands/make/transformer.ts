@@ -7,7 +7,7 @@ import { checkModule } from '../../src/utils.ts'
 export default class MMakeTransformer extends MakeTransformer {
   @flags.string(MODULE_FLAG)
   declare module: string
-  
+
   override async run() {
     if (!this.module) {
       return super.run()
