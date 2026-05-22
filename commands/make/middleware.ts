@@ -4,7 +4,6 @@ import { stubsRoot } from '../../stubs/main.js'
 import { flags } from '@adonisjs/core/ace'
 import MakeMiddleware from '@adonisjs/core/commands/make/middleware'
 import stringHelpers from '@adonisjs/core/helpers/string'
-import { slash } from '@adonisjs/core/helpers'
 import { COMMAND_PREFIX, MODULE_FLAG } from '../../src/constants.js'
 import { checkModule } from '../../src/utils.js'
 
@@ -62,7 +61,7 @@ export default class MMakeMiddleware extends MakeMiddleware {
      * Creative relative path for the middleware file from
      * the "./app/middleware" directory
      */
-    const middlewareRelativePath = slash(
+    const middlewareRelativePath = stringHelpers.toUnixSlash(
       relative(this.app.middlewarePath(), destination).replace(extname(destination), '')
     )
 

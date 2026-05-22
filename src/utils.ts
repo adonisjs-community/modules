@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import stringHelpers from '@adonisjs/core/helpers/string'
-import { ApplicationService } from '@adonisjs/core/types'
+import type { ApplicationService } from '@adonisjs/core/types'
 import { readFileSync, writeFileSync } from 'node:fs'
 
 export function checkModule(app: ApplicationService, value: string): boolean {
